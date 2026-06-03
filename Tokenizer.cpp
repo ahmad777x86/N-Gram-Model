@@ -24,13 +24,21 @@ vector<string> Tokenizer::tokenize(string corpus)
             lookup_table.push_back(word);
         }
     }
+    if (lookup_table.size() == 0)
+    {
+        word[cw] = '\0';
+        cw = 0;
+        lookup_table.push_back(word);
+    }
     return lookup_table;
 }
 
 void Tokenizer::display_table(vector<string> table)
 {
+    cout << "Lookup table: " << endl;
     for (auto i : table)
     {
         cout << i << endl;
     }
+    cout << endl;
 }
