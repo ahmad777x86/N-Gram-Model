@@ -12,7 +12,7 @@ vector<string> Tokenizer::tokenize(string corpus)
 
     for (int i = 0; corpus[i] != '\0'; i++)
     {
-        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-')
+        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.')
         {
             word[cw] = corpus[i];
             cw++;
@@ -24,12 +24,19 @@ vector<string> Tokenizer::tokenize(string corpus)
             lookup_table.push_back(word);
         }
     }
+    if (cw >= 1)
+    {
+        word[cw] = '\0';
+        cw = 0;
+        lookup_table.push_back(word);
+    }
     if (lookup_table.size() == 0)
     {
         word[cw] = '\0';
         cw = 0;
         lookup_table.push_back(word);
     }
+    delete[] word;
     return lookup_table;
 }
 

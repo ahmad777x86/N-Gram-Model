@@ -2,24 +2,14 @@
 #include <fstream>
 #include <vector>
 #include "Tokenizer.h"
+#include "Utility.h"
 
 using namespace std;
 
 int main()
 {
-    fstream corpus_file("decision_trees_corpus.txt");
-    string corpus;
-    if (corpus_file.is_open())
-    {
-        corpus_file >> corpus;
-        cout << corpus << endl;
-        corpus_file.close();
-        cout << "Retreived successfully" << endl;
-    }
-    else
-    {
-        cout << "Failed to retreive text" << endl;
-    }
+    string corpus = Utility::readCorpus("decision_trees_corpus.txt");
+
     vector<string> table = Tokenizer::tokenize(corpus);
     Tokenizer::display_table(table);
 
