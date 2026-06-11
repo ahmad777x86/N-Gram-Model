@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <map>
 #include "Tokenizer.h"
 #include "Utility.h"
 
@@ -11,20 +12,10 @@ int main()
     string corpus = Utility::readCorpus("decision_trees_corpus.txt");
 
     vector<string> table = Tokenizer::tokenize(corpus);
-    Tokenizer::display_table(table);
 
-    string input;
-    getline(cin, input);
+    cout << "Corpus size: " << table.size() << endl;
 
-    vector<string> input_table = Tokenizer::tokenize(input);
-    Tokenizer::display_table(input_table);
-
-    string window = input_table.back();
-
-    cout << input;
-    for (int i = 0; i < 5; i++)
-    {
-        cout << table.at(rand() % table.size()) << " ";
-    }
+    map<string, int> u_table = Tokenizer::uniqueTokenMapping(table);
+    cout << "Unique table size: " << u_table.size() << endl;
     return 0;
 }

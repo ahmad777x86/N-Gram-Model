@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <map>
 #include "Tokenizer.h"
 
 using namespace std;
@@ -42,10 +43,25 @@ vector<string> Tokenizer::tokenize(string corpus)
 
 void Tokenizer::display_table(vector<string> table)
 {
-    cout << "Lookup table: " << endl;
+    cout << "Tokenized corpus: " << endl;
     for (auto i : table)
     {
         cout << i << endl;
     }
     cout << endl;
+}
+
+map<string, int> Tokenizer::uniqueTokenMapping(vector<string> corpus)
+{
+    map<string, int> unique_table;
+    int c = 0;
+    for (auto i : corpus)
+    {
+        if (unique_table.find(i) == unique_table.end())
+        {
+            unique_table[i] = c;
+            c++;
+        }
+    }
+    return unique_table;
 }
