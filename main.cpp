@@ -4,6 +4,7 @@
 #include <map>
 #include "Tokenizer.h"
 #include "Utility.h"
+#include "NGramModel.h"
 
 using namespace std;
 
@@ -17,5 +18,8 @@ int main()
 
     map<string, int> u_table = Tokenizer::uniqueTokenMapping(table);
     cout << "Unique table size: " << u_table.size() << endl;
+
+    NGram model(2);
+    model.calculateOccurences(table, u_table);
     return 0;
 }
