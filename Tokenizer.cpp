@@ -13,7 +13,7 @@ vector<string> Tokenizer::tokenize(string corpus)
 
     for (int i = 0; corpus[i] != '\0'; i++)
     {
-        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.')
+        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.' && corpus[i] != ':')
         {
             word[cw] = corpus[i];
             cw++;
@@ -54,10 +54,16 @@ void Tokenizer::display_table(vector<string> table)
 vector<string> Tokenizer::idsToStrings(map<string, int> string_to_ids)
 {
     vector<string> ids_to_string;
+    string *ids_to_string_arr = new string[string_to_ids.size()];
     for (auto i : string_to_ids)
     {
-        ids_to_string.push_back(i.first);
+        ids_to_string_arr[i.second] = i.first;
     }
+    for (int i = 0; i < string_to_ids.size(); i++)
+    {
+        ids_to_string.push_back(ids_to_string_arr[i]);
+    }
+    delete[] ids_to_string_arr;
     return ids_to_string;
 }
 

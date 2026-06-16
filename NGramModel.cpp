@@ -21,7 +21,6 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
         for (int i = 0; i < this->context_size; i++)
         {
             context_window.push_back(lookup_table[corpus[k + i]]);
-            k++;
         }
 
         if (this->occurences.find(context_window) == occurences.end())
@@ -33,15 +32,68 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
             occurences[context_window]++;
         }
         context_window.clear();
+        k++;
     }
     cout << "Calculated occurences!" << endl;
 }
 
-void NGram::display_occurences(map<string, int> str_to_ids)
+void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_to_ints)
 {
+    vector<int> context_window;
+
+    for (int i = 0; i < context_size - 1; i++)
+    {
+        if (str_to_ints.find(input_seq[i]) != str_to_ints.end())
+        {
+            context_window.push_back(str_to_ints[input_seq[i]]);
+        }
+        else
+        {
+            context_window.push_back(-1);
+            output_token = -1;
+            return;
+        }
+    }
+    int max_occ_token_count = 0;
+    for (auto i : str_to_ints)
+    {
+        context_window.push_back(i.second);
+        if (occurences.find(context_window) != occurences.end())
+        {
+            if (occurences[context_window] > max_occ_token_count)
+            {
+                output_token = i.second;
+            }
+        }
+        context_window.pop_back();
+    }
+    // cout << "Output Token: " << output_token << endl;
+}
+
+void NGram::display_occurences_head(map<string, int> str_to_ids)
+{
+    int c = 0;
     vector<string> ids_to_str = Tokenizer::idsToStrings(str_to_ids);
     for (auto i : occurences)
     {
+        if (c == 5)
+            break;
         cout << ids_to_str[i.first[0]] << " " << ids_to_str[i.first[1]] << ": " << i.second << endl;
+        c++;
+    }
+}
+
+string NGram::displayToken(map<string, int> str_to_ids)
+{
+    vector<string> ids_to_str = Tokenizer::idsToStrings(str_to_ids);
+    if (output_token != -1)
+    {
+        cout << ids_to_str[output_token] << " ";
+        return ids_to_str[output_token];
+    }
+    else
+    {
+        cout << "<idk>" << " ";
+        return "<idk>";
     }
 }

@@ -10,9 +10,12 @@ class NGram
 private:
     int context_size;
     map<vector<int>, int> occurences;
+    int output_token;
 
 public:
     NGram(int);
     void calculateOccurences(vector<string>, map<string, int>);
-    void display_occurences(map<string, int>);
+    void estimateProbabilites(vector<string>, map<string, int>);
+    void display_occurences_head(map<string, int>);
+    string displayToken(map<string, int>);
 };

@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    string corpus = Utility::readCorpus("decision_trees_corpus.txt");
+    string corpus = Utility::readCorpus("corpus.txt");
 
     vector<string> table = Tokenizer::tokenize(corpus);
 
@@ -21,6 +21,15 @@ int main()
 
     NGram model(2);
     model.calculateOccurences(table, u_table);
-    model.display_occurences(u_table);
+    model.display_occurences_head(u_table);
+
+    string input = "black";
+    cout << "Output: " << input;
+    for (int i = 0; i < 5; i++)
+    {
+        model.estimateProbabilites(vector<string>{input}, u_table);
+        cout << " ";
+        input = model.displayToken(u_table);
+    }
     return 0;
 }
