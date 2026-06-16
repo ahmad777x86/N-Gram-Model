@@ -10,5 +10,6 @@ class Tokenizer
 public:
     static vector<string> tokenize(string);
     static void display_table(vector<string>);
-    static map<string, int> uniqueTokenMapping(vector<string>);
+    static map<string, int> stringToIds(vector<string>);
+    static vector<string> idsToStrings(map<string, int>);
 };

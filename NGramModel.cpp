@@ -14,14 +14,15 @@ NGram::NGram(int gram)
 
 void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_table)
 {
-    int i = 0;
-    int j = 1;
     vector<int> context_window;
-
-    while (j < corpus.size() - 1)
+    int k = 0;
+    while (k + context_size < corpus.size())
     {
-        context_window.push_back(lookup_table[corpus[i++]]);
-        context_window.push_back(lookup_table[corpus[j++]]);
+        for (int i = 0; i < this->context_size; i++)
+        {
+            context_window.push_back(lookup_table[corpus[k + i]]);
+            k++;
+        }
 
         if (this->occurences.find(context_window) == occurences.end())
         {
@@ -36,10 +37,11 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
     cout << "Calculated occurences!" << endl;
 }
 
-void NGram::display_occurences()
+void NGram::display_occurences(map<string, int> str_to_ids)
 {
+    vector<string> ids_to_str = Tokenizer::idsToStrings(str_to_ids);
     for (auto i : occurences)
     {
-        cout << i.first[0] << " " << i.first[1] << ": " << i.second << endl;
+        cout << ids_to_str[i.first[0]] << " " << ids_to_str[i.first[1]] << ": " << i.second << endl;
     }
 }

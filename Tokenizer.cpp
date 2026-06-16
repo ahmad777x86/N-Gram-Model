@@ -51,7 +51,17 @@ void Tokenizer::display_table(vector<string> table)
     cout << endl;
 }
 
-map<string, int> Tokenizer::uniqueTokenMapping(vector<string> corpus)
+vector<string> Tokenizer::idsToStrings(map<string, int> string_to_ids)
+{
+    vector<string> ids_to_string;
+    for (auto i : string_to_ids)
+    {
+        ids_to_string.push_back(i.first);
+    }
+    return ids_to_string;
+}
+
+map<string, int> Tokenizer::stringToIds(vector<string> corpus)
 {
     map<string, int> unique_table;
     int c = 0;

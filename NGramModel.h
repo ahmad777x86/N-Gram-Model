@@ -14,5 +14,5 @@ private:
 public:
     NGram(int);
     void calculateOccurences(vector<string>, map<string, int>);
-    void display_occurences();
+    void display_occurences(map<string, int>);
 };
