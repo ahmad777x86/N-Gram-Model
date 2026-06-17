@@ -78,7 +78,11 @@ void NGram::display_occurences_head(map<string, int> str_to_ids)
     {
         if (c == 5)
             break;
-        cout << ids_to_str[i.first[0]] << " " << ids_to_str[i.first[1]] << ": " << i.second << endl;
+        for (int j = 0; j < context_size; j++)
+        {
+            cout << i.first[j] << " ";
+        }
+        cout << ": " << i.second << endl;
         c++;
     }
 }
