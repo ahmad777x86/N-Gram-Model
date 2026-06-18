@@ -12,6 +12,11 @@ NGram::NGram(int gram)
     this->context_size = gram;
 }
 
+int NGram::getGramSize()
+{
+    return this->context_size;
+}
+
 void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_table)
 {
     vector<int> context_window;
@@ -40,6 +45,9 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
 void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_to_ints)
 {
     vector<int> context_window;
+    int max_occ_token_count = 0;
+    int total_count = 0;
+    float highest_proabability = 0;
 
     for (int i = 0; i < context_size - 1; i++)
     {
@@ -54,7 +62,18 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
             return;
         }
     }
-    int max_occ_token_count = 0;
+
+    for (auto i : str_to_ints)
+    {
+        context_window.push_back(i.second);
+        if (occurences.find(context_window) != occurences.end())
+        {
+            total_count += occurences[context_window];
+        }
+        context_window.pop_back();
+    }
+
+    // cout << "Total count: " << total_count << endl;
     for (auto i : str_to_ints)
     {
         context_window.push_back(i.second);
@@ -63,11 +82,14 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
             if (occurences[context_window] > max_occ_token_count)
             {
                 output_token = i.second;
+                if (total_count != 0)
+                    highest_proabability = (float)occurences[context_window] / total_count;
+                max_occ_token_count = occurences[context_window];
             }
         }
         context_window.pop_back();
     }
-    // cout << "Output Token: " << output_token << endl;
+    cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
 }
 
 void NGram::display_occurences_head(map<string, int> str_to_ids)

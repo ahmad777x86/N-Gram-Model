@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <algorithm>
 #include "Tokenizer.h"
 #include "Utility.h"
 #include "NGramModel.h"
@@ -23,13 +24,19 @@ int main()
     model.calculateOccurences(table, u_table);
     model.display_occurences_head(u_table);
 
-    string input = "black";
-    cout << "Output: " << input;
-    for (int i = 0; i < 5; i++)
+    vector<string> input = {"deep"};
+    cout << "Output: ";
+    for (auto i : input)
     {
-        model.estimateProbabilites(vector<string>{input}, u_table);
+        cout << i << " ";
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        model.estimateProbabilites(input, u_table);
         cout << " ";
-        input = model.displayToken(u_table);
+        rotate(input.begin(), input.begin() + 1, input.end());
+        input.pop_back();
+        input.push_back(model.displayToken(u_table));
     }
     return 0;
 }
