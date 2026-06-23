@@ -26,7 +26,7 @@ int main()
     model.calculateOccurences(table, u_table);
     model.display_occurences_head(u_table);
 
-    vector<string> input = {"diabolical"};
+    vector<string> input = {"deep"};
     cout << "Output: ";
     for (auto i : input)
     {

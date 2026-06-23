@@ -89,8 +89,9 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
         }
         context_window.pop_back();
     }
-    if (highest_proabability == 1 / (float)str_to_ints.size())
+    if (max_occ_token_count == 1)
     {
+        cout << " <next token random> ";
         output_token = rand() % str_to_ints.size();
     }
     // cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
