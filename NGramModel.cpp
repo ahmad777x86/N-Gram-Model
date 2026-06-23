@@ -48,6 +48,7 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
     int max_occ_token_count = 0;
     int total_count = 0;
     float highest_proabability = 0;
+    int seq_count = 0;
 
     for (int i = 0; i < context_size - 1; i++)
     {
@@ -55,12 +56,12 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
         {
             context_window.push_back(str_to_ints[input_seq[i]]);
         }
-        else
-        {
-            context_window.push_back(-1);
-            output_token = -1;
-            return;
-        }
+        // else
+        // {
+        //     context_window.push_back(-1);
+        //     output_token = -1;
+        //     return;
+        // }
     }
 
     for (auto i : str_to_ints)
@@ -72,24 +73,27 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
         }
         context_window.pop_back();
     }
+    total_count += str_to_ints.size();
 
     // cout << "Total count: " << total_count << endl;
     for (auto i : str_to_ints)
     {
         context_window.push_back(i.second);
-        if (occurences.find(context_window) != occurences.end())
+        seq_count = occurences.find(context_window) != occurences.end() ? occurences[context_window] + 1 : 1;
+        if (seq_count > max_occ_token_count)
         {
-            if (occurences[context_window] > max_occ_token_count)
-            {
-                output_token = i.second;
-                if (total_count != 0)
-                    highest_proabability = (float)occurences[context_window] / total_count;
-                max_occ_token_count = occurences[context_window];
-            }
+            output_token = i.second;
+            if (total_count != 0)
+                highest_proabability = (float)seq_count / total_count;
+            max_occ_token_count = seq_count;
         }
         context_window.pop_back();
     }
-    cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
+    if (highest_proabability == 1 / (float)str_to_ints.size())
+    {
+        output_token = rand() % str_to_ints.size();
+    }
+    // cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
 }
 
 void NGram::display_occurences_head(map<string, int> str_to_ids)

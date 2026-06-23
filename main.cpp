@@ -11,6 +11,8 @@ using namespace std;
 
 int main()
 {
+    srand(time(0));
+
     string corpus = Utility::readCorpus("corpus.txt");
 
     vector<string> table = Tokenizer::tokenize(corpus);
@@ -24,7 +26,7 @@ int main()
     model.calculateOccurences(table, u_table);
     model.display_occurences_head(u_table);
 
-    vector<string> input = {"deep"};
+    vector<string> input = {"diabolical"};
     cout << "Output: ";
     for (auto i : input)
     {
