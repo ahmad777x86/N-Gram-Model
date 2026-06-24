@@ -16,7 +16,7 @@ public:
     NGram(int);
     int getGramSize();
     void calculateOccurences(vector<string>, map<string, int>);
-    void estimateProbabilites(vector<string>, map<string, int>);
+    double predictNextToken(vector<string>, map<string, int>);
     void display_occurences_head(map<string, int>);
     string displayToken(map<string, int>);
 };

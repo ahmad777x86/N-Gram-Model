@@ -6,6 +6,7 @@
 #include "Tokenizer.h"
 #include "Utility.h"
 #include "NGramModel.h"
+#include "Perplexity.h"
 
 using namespace std;
 
@@ -22,23 +23,32 @@ int main()
     map<string, int> u_table = Tokenizer::stringToIds(table);
     cout << "Unique table size: " << u_table.size() << endl;
 
+    // model
     NGram model(2);
     model.calculateOccurences(table, u_table);
     model.display_occurences_head(u_table);
 
-    vector<string> input = {"deep"};
+    // Metric
+    Perplexity perplexity;
+    perplexity.setSeqLength(model.getGramSize() - 1);
+
+    // I/O
+    vector<string> input = {"diabolical"};
     cout << "Output: ";
+
     for (auto i : input)
     {
         cout << i << " ";
     }
     for (int i = 0; i < 10; i++)
     {
-        model.estimateProbabilites(input, u_table);
+        perplexity.incrementProbabilities(model.predictNextToken(input, u_table));
         cout << " ";
         rotate(input.begin(), input.begin() + 1, input.end());
         input.pop_back();
         input.push_back(model.displayToken(u_table));
+        perplexity.incrementSeqLength(1);
     }
+    cout << "\nPerplexity: " << perplexity.calculatePerplexity() << endl;
     return 0;
 }

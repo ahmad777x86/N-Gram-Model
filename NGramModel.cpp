@@ -42,7 +42,7 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
     cout << "Calculated occurences!" << endl;
 }
 
-void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_to_ints)
+double NGram::predictNextToken(vector<string> input_seq, map<string, int> str_to_ints)
 {
     vector<int> context_window;
     int max_occ_token_count = 0;
@@ -94,7 +94,8 @@ void NGram::estimateProbabilites(vector<string> input_seq, map<string, int> str_
         cout << " <next token random> ";
         output_token = rand() % str_to_ints.size();
     }
-    // cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
+    cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
+    return highest_proabability;
 }
 
 void NGram::display_occurences_head(map<string, int> str_to_ids)
