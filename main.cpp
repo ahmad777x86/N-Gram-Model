@@ -24,7 +24,7 @@ int main()
     cout << "Unique table size: " << u_table.size() << endl;
 
     // model
-    NGram model(2);
+    NGram model(3);
     model.calculateOccurences(table, u_table);
     model.display_occurences_head(u_table);
 
@@ -33,22 +33,14 @@ int main()
     perplexity.setSeqLength(model.getGramSize() - 1);
 
     // I/O
-    vector<string> input = {"diabolical"};
+    vector<string> input = {"diabolical", "gpu"};
     cout << "Output: ";
 
     for (auto i : input)
     {
         cout << i << " ";
     }
-    for (int i = 0; i < 10; i++)
-    {
-        perplexity.incrementProbabilities(model.predictNextToken(input, u_table));
-        cout << " ";
-        rotate(input.begin(), input.begin() + 1, input.end());
-        input.pop_back();
-        input.push_back(model.displayToken(u_table));
-        perplexity.incrementSeqLength(1);
-    }
+    Utility::inference(model, perplexity, u_table, input, 10, 0);
     cout << "\nPerplexity: " << perplexity.calculatePerplexity() << endl;
     return 0;
 }

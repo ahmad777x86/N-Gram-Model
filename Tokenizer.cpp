@@ -13,7 +13,7 @@ vector<string> Tokenizer::tokenize(string corpus)
 
     for (int i = 0; corpus[i] != '\0'; i++)
     {
-        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.' && corpus[i] != ':')
+        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.' && corpus[i] != ':' && corpus[i] != '\n')
         {
             word[cw] = corpus[i];
             cw++;

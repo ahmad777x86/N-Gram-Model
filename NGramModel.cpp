@@ -17,7 +17,7 @@ int NGram::getGramSize()
     return this->context_size;
 }
 
-void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_table)
+void NGram::calculateOccurences(const vector<string> &corpus, const map<string, int> &lookup_table)
 {
     vector<int> context_window;
     int k = 0;
@@ -25,7 +25,7 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
     {
         for (int i = 0; i < this->context_size; i++)
         {
-            context_window.push_back(lookup_table[corpus[k + i]]);
+            context_window.push_back(lookup_table.at(corpus[k + i]));
         }
 
         if (this->occurences.find(context_window) == occurences.end())
@@ -42,7 +42,7 @@ void NGram::calculateOccurences(vector<string> corpus, map<string, int> lookup_t
     cout << "Calculated occurences!" << endl;
 }
 
-double NGram::predictNextToken(vector<string> input_seq, map<string, int> str_to_ints)
+double NGram::predictNextToken(const vector<string> &input_seq, const map<string, int> &str_to_ints, int verbose)
 {
     vector<int> context_window;
     int max_occ_token_count = 0;
@@ -54,14 +54,13 @@ double NGram::predictNextToken(vector<string> input_seq, map<string, int> str_to
     {
         if (str_to_ints.find(input_seq[i]) != str_to_ints.end())
         {
-            context_window.push_back(str_to_ints[input_seq[i]]);
+            context_window.push_back(str_to_ints.at(input_seq[i]));
         }
-        // else
-        // {
-        //     context_window.push_back(-1);
-        //     output_token = -1;
-        //     return;
-        // }
+        else
+        {
+            context_window.push_back(-1);
+            output_token = -1;
+        }
     }
 
     for (auto i : str_to_ints)
@@ -75,7 +74,6 @@ double NGram::predictNextToken(vector<string> input_seq, map<string, int> str_to
     }
     total_count += str_to_ints.size();
 
-    // cout << "Total count: " << total_count << endl;
     for (auto i : str_to_ints)
     {
         context_window.push_back(i.second);
@@ -91,10 +89,12 @@ double NGram::predictNextToken(vector<string> input_seq, map<string, int> str_to
     }
     if (max_occ_token_count == 1)
     {
-        cout << " <next token random> ";
+        if (verbose == 1)
+            cout << " <next token random> ";
         output_token = rand() % str_to_ints.size();
     }
-    cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
+    if (verbose == 1)
+        cout << "\nOutput Token: " << output_token << " | Probability: " << highest_proabability << endl;
     return highest_proabability;
 }
 
