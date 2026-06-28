@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <string>
+#include <limits>
 #include <algorithm>
 #include "Tokenizer.h"
 #include "Utility.h"
@@ -13,6 +15,8 @@ using namespace std;
 int main()
 {
     srand(time(0));
+    short n = -1;
+    string input_str;
 
     string corpus = Utility::readCorpus("corpus.txt");
 
@@ -23,24 +27,49 @@ int main()
     map<string, int> u_table = Tokenizer::stringToIds(table);
     cout << "Unique table size: " << u_table.size() << endl;
 
+    do
+    {
+        cout << "Enter Gram Size (greater than 1 ideally): ";
+        cin >> n;
+    } while (n < 1);
+
     // model
-    NGram model(3);
+    NGram model(n);
     model.calculateOccurences(table, u_table);
-    model.display_occurences_head(u_table);
+    // model.display_occurences_head(u_table);
 
     // Metric
     Perplexity perplexity;
     perplexity.setSeqLength(model.getGramSize() - 1);
 
     // I/O
-    vector<string> input = {"diabolical", "gpu"};
-    cout << "Output: ";
+    cout << "\nInput text sequence: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, input_str);
 
+    vector<string> input_seq = Tokenizer::tokenize(input_str);
+    vector<string> input;
+    for (int i = model.getGramSize() - 2; i >= 0; i--)
+    {
+        try
+        {
+            input.push_back(input_seq.at(input_seq.size() - 1 - i));
+        }
+        catch (const std::exception &e)
+        {
+            cout << "Please input gram_size-1 words atleast" << endl;
+        }
+    }
+
+    cout << string(120, '=') << endl;
+    cout << "Output: ";
     for (auto i : input)
     {
         cout << i << " ";
     }
     Utility::inference(model, perplexity, u_table, input, 10, 0);
+    cout << "\n"
+         << string(120, '=') << endl;
     cout << "\nPerplexity: " << perplexity.calculatePerplexity() << endl;
     return 0;
 }

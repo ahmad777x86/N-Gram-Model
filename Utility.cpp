@@ -46,9 +46,17 @@ void Utility::inference(NGram &model, Perplexity &perplexity, const map<string, 
     {
         perplexity.incrementProbabilities(model.predictNextToken(input, str_to_ints, verbose_mode));
         cout << " ";
-        rotate(input.begin(), input.begin() + 1, input.end());
-        input.pop_back();
-        input.push_back(model.displayToken(str_to_ints));
+        if (input.size() > 0)
+        {
+            rotate(input.begin(), input.begin() + 1, input.end());
+            if (input.size() > 0)
+                input.pop_back();
+            input.push_back(model.displayToken(str_to_ints));
+        }
+        else
+        {
+            model.displayToken(str_to_ints);
+        }
         perplexity.incrementSeqLength(1);
     }
 }
