@@ -19,7 +19,7 @@ g++ NGramModel.cpp Perplexity.cpp Tokenizer.cpp Utility.cpp main.cpp -o main.exe
 ```
 3. Input gram size and text sequence and see the magic ✨✨.
 4. If you want to change the corpus of the model, just paste your text corpus into the `corpus.txt` file and re-compile. (Optional)
-5. You can also change no. of tokens generated from the `main.cpp` file, default is 10 tokens. (Optional)
+5. You can also change no. of tokens generated from the `main.cpp` file, default is 20 tokens. (Optional)
 
 ---
 
@@ -29,6 +29,14 @@ g++ NGramModel.cpp Perplexity.cpp Tokenizer.cpp Utility.cpp main.cpp -o main.exe
 - `Perplexity.cpp` contains the Perplexity class to evaluate model performance.
 - `Tokenizer.cpp` contains the Tokenizer class to break up the corpus into tokens(single word/character).
 - `Utility.cpp` contains the Utility class for some helpful modules.
+
+---
+
+# Corpus Details
+
+- **Dataset link**: [WikiText by Salesforce AI Research](https://huggingface.co/datasets/Salesforce/wikitext)
+- **License**: [Creative Commons Attribution-ShareAlike License (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/)
+- **Modifications**: Original binary `.parquet` files were unpacked and converted to raw plain-text format for engine consumption.
 
 ---
 
