@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <cctype>
 #include "Tokenizer.h"
 
 using namespace std;
@@ -13,10 +14,30 @@ vector<string> Tokenizer::tokenize(string corpus)
 
     for (int i = 0; corpus[i] != '\0'; i++)
     {
-        if (corpus[i] != ' ' && corpus[i] != ',' && corpus[i] != '-' && corpus[i] != '.' && corpus[i] != ':' && corpus[i] != '\n')
+        if (!isspace(corpus[i]))
         {
-            word[cw] = corpus[i];
-            cw++;
+            if (!ispunct(corpus[i]))
+            {
+                word[cw] = corpus[i];
+                cw++;
+            }
+            else if (cw >= 1)
+            {
+                word[cw] = '\0';
+                cw = 0;
+                lookup_table.push_back(word);
+                word[cw] = corpus[i];
+                word[++cw] = '\0';
+                lookup_table.push_back(word);
+                cw = 0;
+            }
+            else
+            {
+                word[cw] = corpus[i];
+                word[++cw] = '\0';
+                cw = 0;
+                lookup_table.push_back(word);
+            }
         }
         else if (cw >= 1)
         {

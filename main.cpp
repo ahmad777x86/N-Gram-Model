@@ -67,7 +67,7 @@ int main()
     {
         cout << i << " ";
     }
-    Utility::inference(model, perplexity, u_table, input, 10, 0);
+    Utility::inference(model, perplexity, u_table, input, 20, 0);
     cout << "\n"
          << string(120, '=') << endl;
     cout << "\nPerplexity: " << perplexity.calculatePerplexity() << endl;
