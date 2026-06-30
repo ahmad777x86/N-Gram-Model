@@ -30,6 +30,7 @@ int main()
     do
     {
         cout << "Enter Gram Size (greater than 1 ideally): ";
+        flush(cout);
         cin >> n;
     } while (n < 1);
 
@@ -44,6 +45,7 @@ int main()
 
     // I/O
     cout << "\nInput text sequence: ";
+    flush(cout);
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     getline(cin, input_str);
 
@@ -61,7 +63,6 @@ int main()
         }
     }
 
-    cout << string(120, '=') << endl;
     cout << "Output: ";
     for (auto i : input)
     {
@@ -69,7 +70,7 @@ int main()
     }
     Utility::inference(model, perplexity, u_table, input, 20, 0);
     cout << "\n"
-         << string(120, '=') << endl;
+         << endl;
     cout << "\nPerplexity: " << perplexity.calculatePerplexity() << endl;
     return 0;
 }

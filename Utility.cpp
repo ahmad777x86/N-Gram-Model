@@ -52,10 +52,12 @@ void Utility::inference(NGram &model, Perplexity &perplexity, const map<string, 
             if (input.size() > 0)
                 input.pop_back();
             input.push_back(model.displayToken(str_to_ints));
+            flush(cout);
         }
         else
         {
             model.displayToken(str_to_ints);
+            flush(cout);
         }
         perplexity.incrementSeqLength(1);
     }
