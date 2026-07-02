@@ -15,11 +15,18 @@ N-Gram Model is an NLP model used to predict next token/word in a sequence based
 2. In the root of this repository, run the following command:
 
 ```bash
+./main.exe
+```
+
+3. Input gram size and text sequence and see the magic ✨✨.
+4. If you want to make some changes to `main.cpp`, run the following command to re-compile: (Optional)
+
+```bash
 g++ NGramModel.cpp Perplexity.cpp Tokenizer.cpp Utility.cpp main.cpp -o main.exe
 ```
-3. Input gram size and text sequence and see the magic ✨✨.
-4. If you want to change the corpus of the model, just paste your text corpus into the `corpus.txt` file and re-compile. (Optional)
-5. You can also change no. of tokens generated from the `main.cpp` file, default is 20 tokens. (Optional)
+
+5. If you want to change the corpus of the model, just paste your text corpus into the `corpus.txt` file and re-compile. (Optional)
+6. You can also change no. of tokens generated from the `main.cpp` file, default is 20 tokens. (Optional)
 
 ---
 

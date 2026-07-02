@@ -43,7 +43,8 @@ int main()
     Perplexity perplexity;
     perplexity.setSeqLength(model.getGramSize() - 1);
 
-    // I/O
+// I/O
+io:
     cout << "\nInput text sequence: ";
     flush(cout);
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -60,6 +61,7 @@ int main()
         catch (const std::exception &e)
         {
             cout << "Please input gram_size-1 words atleast" << endl;
+            goto io;
         }
     }
 
