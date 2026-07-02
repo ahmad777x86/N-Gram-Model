@@ -39,7 +39,9 @@ void NGram::calculateOccurences(const vector<string> &corpus, const map<string, 
         context_window.clear();
         k++;
     }
-    cout << "Calculated occurences!" << endl;
+    cout << "\033[32m" << "\033[1m"
+         << "Calculated occurences!" << "\033[0m"
+         << endl;
 }
 
 double NGram::predictNextToken(const vector<string> &input_seq, const map<string, int> &str_to_ints, int verbose)
@@ -120,7 +122,7 @@ string NGram::displayToken(map<string, int> str_to_ids)
     vector<string> ids_to_str = Tokenizer::idsToStrings(str_to_ids);
     if (output_token != -1)
     {
-        cout << ids_to_str[output_token] << " ";
+        cout << "\033[33m" << ids_to_str[output_token] << " ";
         return ids_to_str[output_token];
     }
     else
